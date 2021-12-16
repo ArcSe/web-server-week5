@@ -24,7 +24,7 @@ export default (express, bodyParser, createReadStream, crypto, http, user) => {
         res.set({'Content-Type': 'text/plain; charset=utf-8'});
         createReadStream(import.meta.url.substring(7)).pipe(res);
     })
-    .post('/insert/', (req, res) => {
+    .post('/insert/', async (req, res) => {
         const {login, password, URL} = req.body.addr;
         const newUser = new user({login, password});
         try {
