@@ -4,9 +4,12 @@ import bodyParser from 'body-parser';
 import { createReadStream } from 'fs';
 import crypto from 'crypto';
 import http from 'http';
+import m from 'mongoose'
+import UserModel from './models/User.js'
 
 import appSrc from './app.js';
 
-const app = appSrc(express, bodyParser, createReadStream, crypto, http);
+const user = UserModel(m);
+const app = appSrc(express, bodyParser, createReadStream, crypto, http, user);
 
-app.listen(process.env.PORT ?? 4321);
+app.listen(process.env.PORT);
