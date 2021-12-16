@@ -12,14 +12,14 @@ export default (express, bodyParser, createReadStream, crypto, http) => {
     app
     .use((r, res, next) => { r.res.set(CORS); next(); })
     .use(bodyParser.urlencoded({ extended: true }))
-    .get('/sha1/:input', r => {
+    .get('/sha1/:input/', r => {
         const shasum = crypto.createHash('sha1');
         shasum.update(r.params.input);
     
         r.res.send(shasum.digest('hex'));
     })
     
-    .get('/login/', (req, res) => res.send('goss'))
+    .get('/login/', (req, res) => res.send('arcsel'))
     .get('/code/', (req, res) => {
         res.set({'Content-Type': 'text/plain; charset=utf-8'});
         createReadStream(import.meta.url.substring(7)).pipe(res);
@@ -35,7 +35,7 @@ export default (express, bodyParser, createReadStream, crypto, http) => {
             .on('end', () => res.send(b));
         });
     })
-    .get('/hello/', (req, res) => res.send('goss'));
+    .get('*', (req, res) => (req, res) => res.send('arcsel'));
      
     return app;
 
