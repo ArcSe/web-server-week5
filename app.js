@@ -35,7 +35,7 @@ export default (express, bodyParser, createReadStream, crypto, http) => {
             .on('end', () => res.send(b));
         });
     })
-    .get('*', (req, res) => (req, res) => res.send('arcsel'));
+    .all('*', (req, res) => (req, res) => res.send('arcsel'));
      
     return app;
 
