@@ -2,7 +2,7 @@
   "name": "week5",
   "version": "1.0.0",
   "scripts": {
-    "start": "node index.js --PORT=3000"
+    "start": "node index.js"
   },
   "engines": {
     "node": "14.8.0"
