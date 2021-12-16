@@ -12,4 +12,4 @@ import appSrc from './app.js';
 const user = UserModel(m);
 const app = appSrc(express, bodyParser, createReadStream, crypto, http, user);
 
-app.listen(process.env.PORT);
+app.listen(5000);
