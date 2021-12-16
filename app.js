@@ -1,4 +1,4 @@
-export default (express, bodyParser, createReadStream, crypto, http) => {
+export default (express, bodyParser, createReadStream, crypto, http, user) => {
     const app = express();
 
 
@@ -24,7 +24,21 @@ export default (express, bodyParser, createReadStream, crypto, http) => {
         res.set({'Content-Type': 'text/plain; charset=utf-8'});
         createReadStream(import.meta.url.substring(7)).pipe(res);
     })
-    ;
+    .post('/insert/', (req, res) => {
+        const {login, password, URL} = req.body.addr;
+        const newUser = new user({login, password});
+        try {
+          await mongoose.connect(URL, {useNewUrlPaser: true, useUnifiedTopology: true});
+          try {
+            await newUser.save();
+            r.res.status(201).json({"Добавлено: ": login});
+          } catch (error) {
+            r.res.status(400).json({"Ошибка: ": "Нет пароля"});
+          }
+        } catch (error) {
+          console.log(error);
+        }
+    });
 
     app.all('/req/', (req, res) => {
         const addr = req.method === 'POST' ? req.body.addr : req.query.addr;
@@ -35,7 +49,7 @@ export default (express, bodyParser, createReadStream, crypto, http) => {
             .on('end', () => res.send(b));
         });
     })
-    app.all('*', (req, res) => res.send('arcsel'));
+    app.all('*', (req, res) => (req, res) => res.send('arcsel'));
      
     return app;
 
